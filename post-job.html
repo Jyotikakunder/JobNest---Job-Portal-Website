@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job | JobNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        nav {
+            width: 100%;
+            background: #ffffff;
+            padding: 17px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 27px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .logo i {
+            margin-right: 7px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+        .nav-links a {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+        .dashboard-link {
+            color: #2563eb !important;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding-left: 20px;
+            border-left: 1px solid #e2e8f0;
+        }
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            text-align: center;
+            padding: 45px 20px;
+        }
+        .page-header h1 {
+            color: #0f172a;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        .main-container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+        }
+        .form-section {
+            margin-bottom: 35px;
+        }
+        .form-section:last-of-type {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .section-title i {
+            width: 35px;
+            height: 35px;
+            background: #dbeafe;
+            color: #2563eb;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+        }
+        .section-title h2 {
+            font-size: 18px;
+            color: #0f172a;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 7px;
+        }
+        label span {
+            color: #ef4444;
+        }
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: #334155;
+            outline: none;
+            transition: 0.3s;
+            background: #ffffff;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+        ::placeholder {
+            color: #94a3b8;
+        }
+        .job-type-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .job-type {
+            position: relative;
+        }
+        .job-type input {
+            position: absolute;
+            opacity: 0;
+        }
+        .job-type label {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 13px 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #64748b;
+            font-weight: 500;
+            transition: 0.3s;
+            margin: 0;
+        }
+        .job-type label i {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+        .job-type input:checked + label {
+            background: #eff6ff;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+        .form-note {
+            margin-top: 6px;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .cancel-btn {
+            padding: 12px 22px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            color: #64748b;
+            background: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .cancel-btn:hover {
+            background: #f8fafc;
+        }
+        .post-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .post-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        .post-btn i {
+            margin-right: 6px;
+        }
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 22px;
+            margin-top: 50px;
+            font-size: 11px;
+        }
+        @media (max-width: 750px) {
+            .nav-links a:not(.dashboard-link) {
+                display: none;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: auto;
+            }
+            .job-type-options {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        @media (max-width: 550px) {
+            nav {
+                padding: 15px 5%;
+            }
+            .logo {
+                font-size: 23px;
+            }
+            .page-header {
+                padding: 35px 15px;
+            }
+            .page-header h1 {
+                font-size: 26px;
+            }
+            .main-container {
+                padding: 0 12px;
+                margin: 25px auto;
+            }
+            .form-card {
+                padding: 25px 18px;
+            }
+            .job-type-options {
+                grid-template-columns: 1fr;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .cancel-btn, .post-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="home.html" class="logo"><i class="fa-solid fa-briefcase"></i>JobNest</a>
+        <div class="nav-links">
+            <a href="jobs.html"><i class="fa-solid fa-briefcase"></i>Jobs</a>
+            <a href="companies.html"><i class="fa-solid fa-building"></i>Companies</a>
+            <a href="employer-dashboard.html" class="dashboard-link"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+            <div class="profile">
+                <div class="profile-icon"><i class="fa-solid fa-building"></i></div>
+            </div>
+        </div>
+    </nav>
+    <section class="page-header">
+        <h1>Post a New Job</h1>
+        <p>Find the right talent for your company by creating a job listing.</p>
+
+    </section>
+    <main class="main-container">
+        <div class="form-card">
+            <form>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <h2>Job Information</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="job-title">Job Title <span>*</span></label>
+                            <input type="text" id="job-title" placeholder="e.g. Frontend Developer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name <span>*</span></label>
+                            <input type="text" id="company" placeholder="Enter company name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location <span>*</span></label>
+                            <input type="text" id="location" placeholder="e.g. Pune, Maharashtra" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Salary</label>
+                            <input type="text" id="salary" placeholder="e.g. ₹6 - ₹10 LPA">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Experience Level <span>*</span></label>
+                            <select id="experience" required>
+                                <option value="">Select experience</option>
+                                <option>Fresher</option>
+                                <option>0 - 2 Years</option>
+                                <option>2 - 5 Years</option>
+                                <option>5 - 8 Years</option>
+                                <option>8+ Years</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-clock"></i>
+                        <h2>Job Type</h2>
+                    </div>
+                    <div class="job-type-options">
+                        <div class="job-type">
+                            <input type="radio" id="full-time" name="job-type" checked>
+                            <label for="full-time"><i class="fa-solid fa-briefcase"></i>Full-time</label>
+                        </div>
+                        <div class="job-type">
+                            <input type="radio" id="part-time" name="job-type">
+                            <label for="part-time"><i class="fa-solid fa-clock"></i>Part-time</label>
+                        </div>
+                        <div class="job-type">
+                            <input type="radio" id="internship" name="job-type">
+                            <label for="internship"><i class="fa-solid fa-graduation-cap"></i>Internship</label>
+                        </div>
+                    </div>
+                </section>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <h2>Job Description</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description <span>*</span></label>
+                        <textarea id="description" placeholder="Describe the role, company expectations and what the candidate will be working on..." required></textarea>
+                        <div class="form-note">Provide a clear and informative description of the position.</div>
+                    </div>
+                </section>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-list-check"></i>
+                        <h2>Responsibilities</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsibilities">Key Responsibilities <span>*</span></label>
+                        <textarea id="responsibilities" placeholder="Example:
+                            • Develop responsive web applications
+                            • Work with the development team
+                            • Write clean and maintainable code
+                            • Test and improve existing features" required></textarea>
+                    </div>
+                </section>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <h2>Candidate Requirements</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="requirements"> Requirements <span>*</span></label>
+                            <textarea id="requirements" placeholder="Example:
+                                • Bachelor's degree in Computer Science or related field
+                                • Knowledge of HTML, CSS and JavaScript
+                                • Good communication skills
+                                • Problem-solving ability" required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="skills">Required Skills</label>
+                            <input type="text" id="skills" placeholder="e.g. HTML, CSS, JavaScript, React, Git">
+                        </div>
+                    </div>
+                </section>
+                <section class="form-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <h2>Application Details</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="deadline">Application Deadline <span>*</span></label>
+                            <input type="date" id="deadline" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vacancies">Number of Vacancies</label>
+                            <input type="number" id="vacancies" min="1" placeholder="e.g. 5">
+                        </div>
+                    </div>
+                </section>
+                <div class="form-actions">
+                    <a href="employer-dashboard.html" class="cancel-btn">Cancel</a>
+                    <button type="submit" class="post-btn"><i class="fa-solid fa-paper-plane"></i>Post Job</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>© 2026 JobNest. All Rights Reserved.</footer>
+</body>
+</html>

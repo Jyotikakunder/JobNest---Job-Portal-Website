@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Jobs | JobNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background: #f5f8fc;
+            color: #1f2937;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .navbar {
+            width: 100%;
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .logo i {
+            margin-right: 7px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links .active {
+            color: #2563eb;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .login-btn {
+            padding: 9px 18px;
+            border: 1px solid #2563eb;
+            border-radius: 7px;
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .register-btn {
+            padding: 9px 18px;
+            background: #2563eb;
+            color: white;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            padding: 55px 7% 65px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 38px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        .search-box {
+            max-width: 950px;
+            margin: auto;
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.12);
+        }
+        .search-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 15px;
+            border-right: 1px solid #e5e7eb;
+        }
+        .search-input i {
+            color: #2563eb;
+        }
+        .search-input input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            color: #374151;
+        }
+        .search-input input::placeholder {
+            color: #9ca3af;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .jobs-section {
+            padding: 55px 7%;
+        }
+        .jobs-container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .filters {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+        .filters h3 {
+            font-size: 17px;
+            margin-bottom: 22px;
+            color: #111827;
+        }
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        .filter-group h4 {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+        .filter-group label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+        }
+        .filter-group input {
+            accent-color: #2563eb;
+        }
+        .salary-input {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            outline: none;
+            font-size: 12px;
+        }
+        .filter-button {
+            width: 100%;
+            padding: 10px;
+            background: #2563eb;
+            border: none;
+            border-radius: 7px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .results-header h2 {
+            font-size: 21px;
+            color: #111827;
+        }
+        .results-header span {
+            color: #6b7280;
+            font-size: 13px;
+        }
+        .sort-box {
+            border: 1px solid #e5e7eb;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #4b5563;
+        }
+        .job-card {
+            background: white;
+            padding: 23px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+            transition: 0.3s;
+        }
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .job-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .company-info {
+            display: flex;
+            gap: 15px;
+        }
+        .company-logo {
+            width: 52px;
+            height: 52px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 21px;
+        }
+        .job-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+        .company-name {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .save-icon {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #e5e7eb;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+        .job-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin: 18px 0;
+        }
+        .job-info span {
+            color: #64748b;
+            font-size: 12px;
+        }
+        .job-info i {
+            color: #2563eb;
+            margin-right: 5px;
+        }
+        .job-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 17px;
+        }
+        .tag {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .full-time {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .internship {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .part-time {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .remote {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .job-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+        .posted {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .job-actions {
+            display: flex;
+            gap: 9px;
+        }
+        .details-btn {
+            padding: 8px 14px;
+            border: 1px solid #2563eb;
+            border-radius: 6px;
+            color: #2563eb;
+            font-size: 12px;
+        }
+        .apply-btn {
+            padding: 8px 15px;
+            background: #2563eb;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 35px;
+        }
+        .pagination a {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #64748b;
+        }
+        .pagination .active-page {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+        footer {
+            background: #111827;
+            color: white;
+            padding: 55px 7% 25px;
+            margin-top: 30px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 23px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+        .footer-about p {
+            color: #9ca3af;
+            font-size: 12px;
+            line-height: 1.8;
+            max-width: 280px;
+        }
+        footer h3 {
+            font-size: 14px;
+            margin-bottom: 17px;
+        }
+        .footer-links a {
+            display: block;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+        .copyright {
+            border-top: 1px solid #374151;
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 11px;
+        }
+        @media (max-width: 950px) {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .jobs-container {
+                grid-template-columns: 1fr;
+            }
+            .filters {
+                display: none;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-buttons {
+                display: flex;
+            }
+            .page-header {
+                padding: 40px 5px 50px;
+            }
+            .page-header h1 {
+                font-size: 30px;
+            }
+            .search-box {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .search-input {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 12px;
+            }
+            .search-btn {
+                width: 100%;
+            }
+            .jobs-section {
+                padding: 40px 5%;
+            }
+            .results-header {
+                align-items: flex-start;
+                gap: 10px;
+                flex-direction: column;
+            }
+            .job-bottom {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .logo {
+                font-size: 21px;
+            }
+            .login-btn, .register-btn {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .page-header h1 {
+                font-size: 25px;
+            }
+            .job-card {
+                padding: 18px;
+            }
+            .job-title {
+                font-size: 15px;
+            }
+            .company-logo {
+                width: 45px;
+                height: 45px;
+            }
+            .job-actions {
+                width: 100%;
+            }
+            .details-btn, .apply-btn {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fa-solid fa-briefcase"></i> JobNest</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="jobs.html" class="active">Jobs</a>
+            <a href="companies.html">Companies</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="register-btn">Register</a>
+        </div>
+    </nav>
+    <section class="page-header">
+        <h1>Find Your Perfect Job</h1>
+        <p>Explore thousands of opportunities and take the next step in your career.</p>
+        <div class="search-box">
+            <div class="search-input">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Job title, keywords or company">
+            </div>
+            <div class="search-input">
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" placeholder="Location">
+            </div>
+            <button class="search-btn">Search Jobs</button>
+        </div>
+    </section>
+    <section class="jobs-section">
+        <div class="jobs-container">
+            <aside class="filters">
+                <h3>Filter Jobs</h3>
+                <div class="filter-group">
+                    <h4>Job Type</h4>
+                    <label><input type="checkbox">Full-time</label>
+                    <label><input type="checkbox">Part-time</label>
+                    <label><input type="checkbox">Internship</label>
+                    <label><input type="checkbox">Remote</label>
+                </div>
+                <div class="filter-group">
+                    <h4>Experience Level</h4>
+                    <label><input type="checkbox">Entry Level</label>
+                    <label><input type="checkbox">1–2 Years</label>
+                    <label><input type="checkbox">3–5 Years</label>
+                    <label><input type="checkbox">5+ Years</label>
+                </div>
+                <div class="filter-group">
+                    <h4>Salary Range</h4>
+                    <input type="text" class="salary-input" placeholder="e.g. ₹5,00,000">
+                </div>
+                <div class="filter-group">
+                    <h4>Location</h4>
+                    <label><input type="checkbox">Bangalore</label>
+                    <label><input type="checkbox">Pune</label>
+                    <label><input type="checkbox">Mumbai</label>
+                    <label><input type="checkbox">Hyderabad</label>
+                </div>
+                <button class="filter-button">Apply Filters</button>
+            </aside>
+            <div class="job-results">
+                <div class="results-header">
+                    <div>
+                        <h2>Available Jobs</h2>
+                        <span>Showing 8 job opportunities</span>
+                    </div>
+                    <select class="sort-box">
+                        <option>Most Recent</option>
+                        <option>Salary: High to Low</option>
+                        <option>Salary: Low to High</option>
+                    </select>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-brands fa-google"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Frontend Developer</h3>
+                                <p class="company-name">Google</p>
+                            </div>
+                        </div>
+                        <div class="save-icon"><i class="fa-regular fa-bookmark"></i></div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Bangalore, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹8–12 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>1–2 Years</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag full-time">Full-time</span>
+                        <span class="tag remote">Hybrid</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 2 days ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-brands fa-microsoft"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Web Development Intern</h3>
+                                <p class="company-name">Microsoft</p>
+                            </div>
+                        </div>
+                        <div class="save-icon">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Hyderabad, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹25,000 / Month</span>
+                        <span><i class="fa-solid fa-graduation-cap"></i>Fresher</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag internship">Internship</span>
+                        <span class="tag remote">Remote</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 3 days ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-brands fa-amazon"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Software Developer</h3>
+                                <p class="company-name">Amazon</p>
+                            </div>
+                        </div>
+                        <div class="save-icon">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Pune, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹10–15 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>0–2 Years</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag full-time">Full-time</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 5 days ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo"><i class="fa-solid fa-palette"></i></div>
+                            <div>
+                                <h3 class="job-title">UI/UX Designer</h3>
+                                <p class="company-name">Creative Studio</p>
+                            </div>
+                        </div>
+                        <div class="save-icon">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Mumbai, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹6–9 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>1–3 Years</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag full-time">Full-time</span>
+                        <span class="tag remote">Hybrid</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 1 week ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Junior Java Developer</h3>
+                                <p class="company-name">TechNova Solutions</p>
+                            </div>
+                        </div>
+                        <div class="save-icon">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Bangalore, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹5–8 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>Fresher</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag full-time">Full-time</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 1 week ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Mobile App Developer Intern</h3>
+                                <p class="company-name">AppWorks</p>
+                            </div>
+                        </div>
+                        <div class="save-icon">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Pune, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹18,000 / Month</span>
+                        <span><i class="fa-solid fa-graduation-cap"></i>Fresher</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag internship">Internship</span>
+                        <span class="tag remote">Hybrid</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 10 days ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo"><i class="fa-solid fa-database"></i></div>
+                            <div>
+                                <h3 class="job-title">SQL Developer</h3>
+                                <p class="company-name">DataCore Technologies</p>
+                            </div>
+                        </div>
+                        <div class="save-icon"><i class="fa-regular fa-bookmark"></i></div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Hyderabad, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹6–10 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>1–2 Years</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag full-time">Full-time</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 12 days ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-card">
+                    <div class="job-top">
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
+                            <div>
+                                <h3 class="job-title">Digital Marketing Executive</h3>
+                                <p class="company-name">GrowthHub</p>
+                            </div>
+                        </div>
+                        <div class="save-icon"><i class="fa-regular fa-bookmark"></i></div>
+                    </div>
+                    <div class="job-info">
+                        <span><i class="fa-solid fa-location-dot"></i>Mumbai, India</span>
+                        <span><i class="fa-solid fa-indian-rupee-sign"></i>₹4–7 LPA</span>
+                        <span><i class="fa-solid fa-briefcase"></i>0–2 Years</span>
+                    </div>
+                    <div class="job-tags">
+                        <span class="tag part-time">Part-time</span>
+                        <span class="tag remote">Remote</span>
+                    </div>
+                    <div class="job-bottom">
+                        <span class="posted">Posted 2 weeks ago</span>
+                        <div class="job-actions">
+                            <a href="job-details.html" class="details-btn">View Details</a>
+                            <a href="apply.html" class="apply-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fa-solid fa-briefcase"></i> JobNest
+                </div>
+                <p>Connecting talented people with great career opportunities. Find your next opportunity with JobNest.</p>
+            </div>
+            <div class="footer-links">
+                <h3>For Candidates</h3>
+                <a href="jobs.html">Browse Jobs</a>
+                <a href="#">Saved Jobs</a>
+                <a href="#">Career Advice</a>
+                <a href="login.html">Candidate Login</a>
+            </div>
+            <div class="footer-links">
+                <h3>For Employers</h3>
+                <a href="post-job.html">Post a Job</a>
+                <a href="employer-dashboard.html">Dashboard</a>
+                <a href="#">Find Candidates</a>
+                <a href="login.html">Employer Login</a>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <a href="about.html">About Us</a>
+                <a href="companies.html">Companies</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="copyright">© 2026 JobNest. All Rights Reserved.</div>
+    </footer>
+</body>
+</html>

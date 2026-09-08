@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies | JobNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background: #f5f8fc;
+            color: #1f2937;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .navbar {
+            width: 100%;
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .logo i {
+            margin-right: 7px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            transition: 0.3s;
+        }
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #2563eb;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .login-btn {
+            padding: 9px 18px;
+            border: 1px solid #2563eb;
+            border-radius: 7px;
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .register-btn {
+            padding: 9px 18px;
+            background: #2563eb;
+            color: white;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            padding: 60px 7%;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 38px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+        .company-search {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.12);
+        }
+        .company-search i {
+            color: #2563eb;
+            margin: 0 12px;
+        }
+        .company-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 13px;
+        }
+        .company-search button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .companies-section {
+            padding: 55px 7%;
+        }
+        .companies-container {
+            max-width: 1150px;
+            margin: auto;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .section-title h2 {
+            font-size: 25px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+        .section-title p {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+        .industry-card {
+            background: white;
+            padding: 20px 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #eef2f7;
+            transition: 0.3s;
+        }
+        .industry-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        }
+        .industry-icon {
+            width: 45px;
+            height: 45px;
+            margin: auto auto 12px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .industry-card h3 {
+            font-size: 12px;
+            color: #374151;
+        }
+        .industry-card p {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .companies-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .companies-heading h2 {
+            font-size: 23px;
+            color: #111827;
+        }
+        .companies-heading span {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .company-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+            transition: 0.3s;
+        }
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        .company-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .company-logo {
+            width: 58px;
+            height: 58px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+        .company-top h3 {
+            font-size: 16px;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+        .company-top p {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .company-description {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 17px;
+        }
+        .company-details {
+            border-top: 1px solid #eef2f7;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .company-details span {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .company-details i {
+            color: #2563eb;
+            margin-right: 5px;
+        }
+        .view-jobs {
+            display: block;
+            text-align: center;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+            padding: 9px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .view-jobs:hover {
+            background: #2563eb;
+            color: white;
+        }
+        .employer-cta {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 45px;
+            border-radius: 14px;
+            text-align: center;
+            color: white;
+        }
+        .employer-cta h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+        .employer-cta p {
+            font-size: 13px;
+            color: #dbeafe;
+            margin-bottom: 22px;
+        }
+        .post-job-btn {
+            display: inline-block;
+            background: white;
+            color: #2563eb;
+            padding: 11px 23px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        footer {
+            background: #111827;
+            color: white;
+            padding: 55px 7% 25px;
+            margin-top: 20px;
+        }
+        .footer-container {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 23px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+        .footer-about p {
+            color: #9ca3af;
+            font-size: 12px;
+            line-height: 1.8;
+            max-width: 280px;
+        }
+        footer h3 {
+            font-size: 14px;
+            margin-bottom: 17px;
+        }
+        .footer-links a {
+            display: block;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+        .copyright {
+            border-top: 1px solid #374151;
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 11px;
+        }
+        @media (max-width: 1000px) {
+            .industry-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .company-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+            .nav-links {
+                display: none;
+            }
+            .page-header {
+                padding: 45px 5%;
+            }
+            .page-header h1 {
+                font-size: 30px;
+            }
+            .companies-section {
+                padding: 45px 5%;
+            }
+            .industry-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .company-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .employer-cta {
+                padding: 35px 20px;
+            }
+        }
+        @media (max-width: 500px) {
+            .logo {
+                font-size: 21px;
+            }
+            .login-btn, .register-btn {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .page-header h1 {
+                font-size: 25px;
+            }
+            .company-search {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+            }
+            .company-search input {
+                width: 100%;
+                padding: 10px;
+            }
+            .company-search button {
+                width: 100%;
+            }
+            .industry-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .companies-heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .company-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="home.html" class="logo"><i class="fa-solid fa-briefcase"></i> JobNest</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="companies.html" class="active">Companies</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="register-btn">Register</a>
+        </div>
+    </nav>
+    <section class="page-header">
+        <h1>Explore Top Companies</h1>
+        <p>Discover companies, explore their opportunities and find the right workplace for your career.</p>
+        <div class="company-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search companies or industries">
+            <button>Search</button>
+        </div>
+    </section>
+    <section class="companies-section">
+        <div class="companies-container">
+            <div class="section-title">
+                <h2>Explore by Industry</h2>
+                <p>Find companies based on your area of interest.</p>
+            </div>
+            <div class="industry-grid">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Technology</h3>
+                    <p>245 Companies</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Finance</h3>
+                    <p>120 Companies</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <h3>Marketing</h3>
+                    <p>98 Companies</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Healthcare</h3>
+                    <p>86 Companies</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <h3>Retail</h3> 
+                    <p>75 Companies</p>
+                </div>
+            </div>
+            <div class="companies-heading">
+                <div>
+                    <h2>Top Companies</h2>
+                    <span>Explore leading companies hiring talented professionals</span>
+                </div>
+                <span>120+ Companies</span>
+            </div>
+            <div class="company-grid">
+                <div class="company-card">
+                    <div class="company-top">
+                        <div class="company-logo"><i class="fa-brands fa-google"></i></div>
+                        <div>
+                            <h3>Google</h3>
+                            <p>Technology & Software</p>
+                        </div>
+                    </div>
+                    <p class="company-description">A global technology company focused on information, technology and digital products.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Bangalore</span>
+                        <span><i class="fa-solid fa-briefcase"></i>24 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+                <div class="company-card">
+                    <div class="company-top">
+                        <div class="company-logo">
+                            <i class="fa-brands fa-microsoft"></i>
+                        </div>
+                        <div>
+                            <h3>Microsoft</h3>
+                            <p>Technology & Software</p>
+                        </div>
+                    </div>
+                    <p class="company-description">A technology company creating software, cloud services and digital solutions.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Hyderabad</span>
+                        <span><i class="fa-solid fa-briefcase"></i>18 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+                <div class="company-card">
+                    <div class="company-top">
+                        <div class="company-logo"><i class="fa-brands fa-amazon"></i></div>
+                        <div>
+                            <h3>Amazon</h3>
+                            <p>E-Commerce & Technology</p>
+                        </div>
+                    </div>
+                    <p class="company-description">A global company working across e-commerce, cloud computing and digital services.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Pune</span>
+                        <span><i class="fa-solid fa-briefcase"></i>31 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+                <div class="company-card">
+                    <div class="company-top">
+                        <div class="company-logo"><i class="fa-solid fa-code"></i></div>
+                        <div>
+                            <h3>TechNova Solutions</h3>
+                            <p>Software Development</p>
+                        </div>
+                    </div>
+                    <p class="company-description">A software development company building modern web and enterprise applications.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Bangalore</span>
+                        <span><i class="fa-solid fa-briefcase"></i>12 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+                <div class="company-card">
+                    <div class="company-top">
+                        <div class="company-logo"><i class="fa-solid fa-palette"></i></div>
+                        <div>
+                            <h3>Creative Studio</h3>
+                            <p>Design & Creative</p>
+                        </div>
+                    </div>
+                    <p class="company-description">A creative company working on digital design, branding and user experience solutions.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Mumbai</span>
+                        <span><i class="fa-solid fa-briefcase"></i>9 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+                <div class="company-card">
+
+                    <div class="company-top">
+                        <div class="company-logo"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <div>
+                            <h3>AppWorks</h3>
+                            <p>Mobile Technology</p>
+                        </div>
+                    </div>
+                    <p class="company-description"></p>A technology company developing innovative mobile applications and digital products.</p>
+                    <div class="company-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Pune</span>
+                        <span><i class="fa-solid fa-briefcase"></i>7 Jobs</span>
+                    </div>
+                    <a href="jobs.html" class="view-jobs">View Jobs</a>
+                </div>
+            </div>
+            <div class="employer-cta">
+                <h2>Are You Hiring?</h2>
+                <p>Connect with talented candidates and find the right people for your organization.</p>
+                <a href="post-job.html" class="post-job-btn">Post a Job</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo"><i class="fa-solid fa-briefcase"></i> JobNest</div>
+                <p>Connecting talented people with the right opportunities and helping companies find the talent they need.</p>
+            </div>
+            <div class="footer-column">
+                <h3>For Candidates</h3>
+                <a href="jobs.html">Browse Jobs</a>
+                <a href="companies.html">Explore Companies</a>
+                <a href="login.html">Candidate Login</a>
+                <a href="signup.html">Create Account</a>
+            </div>
+            <div class="footer-column">
+                <h3>For Employers</h3>
+                <a href="post-job.html">Post a Job</a>
+                <a href="employer-dashboard.html">Employer Dashboard</a>
+                <a href="signup.html">Employer Registration</a>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <a href="about.html">About Us</a>
+                <a href="index.html">Home</a>
+                <a href="jobs.html">Jobs</a>
+                <a href="companies.html">Companies</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 JobNest. All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>

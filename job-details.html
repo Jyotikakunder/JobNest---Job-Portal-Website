@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details | JobNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background: #f5f8fc;
+            color: #1f2937;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .navbar {
+            width: 100%;
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .logo i {
+            margin-right: 7px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links .active {
+            color: #2563eb;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .login-btn {
+            padding: 9px 18px;
+            border: 1px solid #2563eb;
+            border-radius: 7px;
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .register-btn {
+            padding: 9px 18px;
+            background: #2563eb;
+            color: white;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .job-header {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            padding: 55px 7%;
+        }
+        .job-header-container {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+        .job-main-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .company-logo {
+            width: 75px;
+            height: 75px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 32px;
+            box-shadow: 0 5px 18px rgba(37,99,235,0.12);
+        }
+        .job-header h1 {
+            font-size: 31px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+        .company-name {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+        .header-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 17px;
+        }
+        .header-details span {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .header-details i {
+            color: #2563eb;
+            margin-right: 5px;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .save-btn {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border: 1px solid #dbe3ee;
+            border-radius: 7px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .apply-btn {
+            padding: 12px 25px;
+            background: #2563eb;
+            color: white;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .details-section {
+            padding: 50px 7%;
+        }
+        .details-container {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+        }
+        .content-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+        }
+        .content-card h2 {
+            font-size: 19px;
+            color: #111827;
+            margin-bottom: 18px;
+        }
+        .content-card p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+        .content-card ul {
+            padding-left: 20px;
+        }
+        .content-card li {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.9;
+            margin-bottom: 8px;
+        }
+        .responsibilities li::marker, .requirements li::marker {
+            color: #2563eb;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 18px;
+        }
+        .skill {
+            padding: 7px 13px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .company-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 17px;
+        }
+        .small-logo {
+            width: 55px;
+            height: 55px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+        .company-card h3 {
+            font-size: 15px;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+        .company-card p {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .company-info-text {
+            border-top: 1px solid #eef2f7;
+            padding-top: 17px;
+        }
+        .sidebar-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+        }
+        .sidebar-card h3 {
+            font-size: 17px;
+            color: #111827;
+            margin-bottom: 20px;
+        }
+        .overview-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 19px;
+        }
+        .overview-icon {
+            width: 38px;
+            height: 38px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .overview-item h4 {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-bottom: 3px;
+        }
+        .overview-item p {
+            font-size: 12px;
+            color: #374151;
+            font-weight: 500;
+        }
+        .apply-card {
+            background: #2563eb;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .apply-card h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+        .apply-card p {
+            color: #dbeafe;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .apply-card a {
+            display: block;
+            background: white;
+            color: #2563eb;
+            padding: 10px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        footer {
+            background: #111827;
+            color: white;
+            padding: 55px 7% 25px;
+            margin-top: 20px;
+        }
+        .footer-container {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-size: 23px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+        .footer-about p {
+            color: #9ca3af;
+            font-size: 12px;
+            line-height: 1.8;
+            max-width: 280px;
+        }
+        footer h3 {
+            font-size: 14px;
+            margin-bottom: 17px;
+        }
+        .footer-links a {
+            display: block;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+        .copyright {
+            border-top: 1px solid #374151;
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 11px;
+        }
+        @media (max-width: 950px) {
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-buttons {
+                display: flex;
+            }
+            .job-header {
+                padding: 40px 5%;
+            }
+            .job-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-buttons {
+                width: 100%;
+            }
+            .apply-btn {
+                flex: 1;
+                text-align: center;
+            }
+            .details-section {
+                padding: 40px 5%;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .logo {
+                font-size: 21px;
+            }
+            .login-btn, .register-btn {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .job-main-info {
+                align-items: flex-start;
+            }
+            .company-logo {
+                width: 58px;
+                height: 58px;
+                font-size: 25px;
+            }
+            .job-header h1 {
+                font-size: 24px;
+            }
+            .header-details {
+                flex-direction: column;
+                gap: 7px;
+            }
+            .content-card {
+                padding: 22px;
+            }
+            .content-card h2 {
+                font-size: 17px;
+            }
+            .content-card p, .content-card li {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="home.html" class="logo">
+            <i class="fa-solid fa-briefcase"></i> JobNest
+        </a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="jobs.html" class="active">Jobs</a>
+            <a href="companies.html">Companies</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="register-btn">Register</a>
+        </div>
+    </nav>
+    <section class="job-header">
+        <div class="job-header-container">
+            <div class="job-main-info">
+                <div class="company-logo"><i class="fa-brands fa-google"></i></div>
+                <div>
+                    <h1>Frontend Developer</h1>
+                    <p class="company-name">Google</p>
+                    <div class="header-details">
+                        <span><i class="fa-solid fa-location-dot"></i>Bangalore, India</span>
+                        <span><i class="fa-solid fa-briefcase"></i>Full-time</span>
+                        <span><i class="fa-solid fa-clock"></i>Posted 2 days ago</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="#" class="save-btn"><i class="fa-regular fa-bookmark"></i></a>
+                <a href="apply.html" class="apply-btn">Apply Now</a>
+            </div>
+        </div>
+    </section>
+    <section class="details-section">
+        <div class="details-container">
+            <div class="left-content">
+                <div class="content-card">
+                    <h2>Job Description</h2>
+                    <p>We are looking for a talented and motivated Frontend Developer to join our team. You will be responsible for creating modern, responsive and user-friendly web applications.</p>
+                    <p>The ideal candidate should have a strong understanding of frontend technologies and a passion for building excellent digital experiences.</p>
+                </div>
+                <div class="content-card">
+                    <h2>Responsibilities</h2>
+                    <ul class="responsibilities">
+                        <li>Develop responsive and user-friendly web interfaces.</li>
+                        <li>Build reusable UI components using modern frontend technologies.</li>
+                        <li>Collaborate with designers and backend developers.</li>
+                        <li>Optimize websites for performance and accessibility.</li>
+                        <li>Identify and fix bugs and improve existing features.</li>
+                        <li>Stay updated with the latest web development trends.</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h2>Requirements</h2>
+                    <ul class="requirements">
+                        <li>Bachelor's degree in Computer Science or related field.</li>
+                        <li>Strong knowledge of HTML, CSS and JavaScript.</li>
+                        <li>Understanding of responsive web design.</li>
+                        <li>Familiarity with Git and version control.</li>
+                        <li>Good problem-solving and communication skills.</li>
+                        <li>Ability to work effectively in a team.</li>
+                    </ul>
+                    <div class="skills">
+                        <span class="skill">HTML</span>
+                        <span class="skill">CSS</span>
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">Git</span>
+                        <span class="skill">Responsive Design</span>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <h2>About the Company</h2>
+                    <div class="company-card">
+                        <div class="small-logo">
+                            <i class="fa-brands fa-google"></i>
+                        </div>
+                        <div>
+                            <h3>Google</h3>
+                            <p>Technology & Software</p>
+                        </div>
+                    </div>
+                    <div class="company-info-text">
+                        <p>Google is a global technology company that develops products and services used by millions of people around the world.</p>
+                        <p>The company focuses on technology, innovation and creating products that help people access and use information more effectively.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <aside>
+                <div class="sidebar-card">
+                    <h3>Job Overview</h3>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h4>Job Type</h4>
+                            <p>Full-time</p>
+                        </div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div>
+                            <h4>Salary</h4>
+                            <p>₹8–12 LPA</p>
+                        </div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Bangalore, India</p>
+                        </div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <h4>Experience</h4>
+                            <p>1–2 Years</p>
+                        </div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-calendar"></i>
+                        </div>
+                        <div>
+                            <h4>Posted</h4>
+                            <p>2 Days Ago</p>
+                        </div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-icon">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                        </div>
+                        <div>
+                            <h4>Application Deadline</h4>
+                            <p>30 September 2026</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="apply-card">
+                    <h3>Interested in this Job?</h3>
+                    <p>Take the next step in your career and apply for this opportunity today.</p>
+                    <a href="apply.html">Apply Now</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo"><i class="fa-solid fa-briefcase"></i> JobNest</div>
+                <p>Connecting talented people with great career opportunities. Find your next opportunity with JobNest.</p>
+            </div>
+            <div class="footer-links">
+                <h3>For Candidates</h3>
+                <a href="jobs.html">Browse Jobs</a>
+                <a href="#">Saved Jobs</a>
+                <a href="#">Career Advice</a>
+                <a href="login.html">Candidate Login</a>
+            </div>
+            <div class="footer-links">
+                <h3>For Employers</h3>
+                <a href="post-job.html">Post a Job</a>
+                <a href="employer-dashboard.html">Dashboard</a>
+                <a href="#">Find Candidates</a>
+                <a href="login.html">Employer Login</a>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <a href="about.html">About Us</a>
+                <a href="companies.html">Companies</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="copyright">© 2026 JobNest. All Rights Reserved.</div>
+    </footer>
+</body>
+</html>
